@@ -83,6 +83,9 @@ def parse_args():
     parser.add_argument(
         "--output", type=str, default="", help="File in which to save the graph"
     )
+    parser.add_argument(
+        '--skiprows',  type=int, default=0, help='skip initial rows of the input file'
+    )
 
     args = parser.parse_args()
     if args.ylabel is None:
@@ -101,6 +104,7 @@ def read_data(args):
     """Read and process dataframe using commandline args"""
     extension = pathlib.Path(args.file.name).suffix
     try:
+<<<<<<< HEAD
         if extension == ".csv":
             data = pd.read_csv(args.file, usecols=["name", args.metric])
         elif extension == ".json":
@@ -109,6 +113,9 @@ def read_data(args):
         else:
             logging.error("Unsupported file extension '{}'".format(extension))
             exit(1)
+=======
+        data = pd.read_csv(args.file, usecols=['name', args.metric], skiprows=args.skiprows)
+>>>>>>> Add skiprows argument to allow skipping header rows
     except ValueError:
         logging.error(
             'Could not parse the benchmark data. Did you forget "--benchmark_format=[csv|json] when running the benchmark"?'
